@@ -1,0 +1,47 @@
+----------------------------------------------------------
+Logfile    : \\vmware-host\Shared Folders\Desktop\auto\0331\Its.log
+Itsfile    : \\vmware-host\Shared Folders\Desktop\auto\0331\D3_DTS_775E3.ii
+Date       : 4/1/2017 11:09:46 AM
+----------------------------------------------------------
+Coefficient name (sdsp_x_src_ctrlts0) NOT found in memory files (Parsing: ** Page: 6 Line: 1 <A> ** )
+  -> "[a] enable src0"															s 38 w &sdsp_x_src_ctrlts0 800000 p
+Coefficient name (sdsp_x_src_ctrlts1) NOT found in memory files (Parsing: ** Page: 6 Line: 2 <B> ** )
+  -> "[b] enable src1"															s 38 w &sdsp_x_src_ctrlts1 800000 p
+Coefficient name (adsp_y_vol_main1p) NOT found in memory files (Parsing: ** Page: 9 Line: 1 <A> ** )
+  -> "[a] volume 0db" 															s 38 w &adsp_y_vol_main1p 07ff p s 38 w &adsp_y_vol_main2p 0080 p
+Coefficient name (adsp_y_vol_main1p) NOT found in memory files (Parsing: ** Page: 9 Line: 2 <B> ** )
+  -> "[b] volume -25db" 															s 38 w &adsp_y_vol_main1p 00e6 p s 38 w &adsp_y_vol_main2p 0040 p
+Coefficient name (adsp_y_vol_main1p) NOT found in memory files (Parsing: ** Page: 9 Line: 3 <C> ** )
+  -> "[c] volume -35db" 															s 38 w &adsp_y_vol_main1p 00e6 p s 38 w &adsp_y_vol_main2p 0014 p
+Coefficient name (adsp_y_vol_main1p) NOT found in memory files (Parsing: ** Page: 9 Line: 4 <D> ** )
+  -> "[d] volume -40db" 															s 38 w &adsp_y_vol_main1p 00e6 p s 38 w &adsp_y_vol_main2p 000b p
+Coefficient name (adsp_y_vol_main1p) NOT found in memory files (Parsing: ** Page: 9 Line: 5 <E> ** )
+  -> "[e] volume -50db" 															s 38 w &adsp_y_vol_main1p 0068 p s 38 w &adsp_y_vol_main2p 0008 p
+Coefficient name (adsp_y_mute_p) NOT found in memory files (Parsing: ** Page: 9 Line: 6 <F> ** )
+  -> "[f] unmute primary" 														s 38 w &adsp_y_mute_p 07ff p
+Coefficient name (adsp_x_ipc_bau2adv_pfstr) NOT found in memory files (Parsing: ** Page: 10 Line: 1 <A> ** )
+  -> "[a] hifi front inputs from frontoutl"          		  					s 38 w &adsp_x_ipc_bau2adv_pfstr &adsp_x_frontoutl_rel p
+Coefficient name (adsp_x_fdacpntr) NOT found in memory files (Parsing: ** Page: 10 Line: 2 <B> ** )
+  -> "[b] fdac input from front audio out of hifi"             					s 38 w &adsp_x_fdacpntr &adsp_x_ipc_bau2adv_outfl_rel p
+Coefficient name (adsp_x_fdacpntr) NOT found in memory files (Parsing: ** Page: 10 Line: 3 <C> ** )
+  -> "[c] fdac input from rear audio out of hifi"               					s 38 w &adsp_x_fdacpntr &adsp_x_ipc_bau2adv_outrl_rel p
+Coefficient name (adsp_x_fdacpntr) NOT found in memory files (Parsing: ** Page: 10 Line: 4 <D> ** )
+  -> "[d] fdac input from center/subwoofer audio out of hifi"  					s 38 w &adsp_x_fdacpntr &adsp_x_ipc_bau2adv_outswl_rel p
+Coefficient name (adsp_x_fdacpntr) NOT found in memory files (Parsing: ** Page: 10 Line: 5 <E> ** )
+  -> "[e] fdac input from secondary audio out of hifi"         					s 38 w &adsp_x_fdacpntr &adsp_x_ipc_bau2adv_outs1l_rel p
+Coefficient name (sdsp_x_src_ctrlts0) NOT found in memory files (Parsing: ** Page: 14 Line: 3 <C> ** )
+  -> "[3] tune 88.2mhz & 48k & update defaults & enable src+codec & 0db unmute"		m 4a 5c 5ab 6a 7a 9af
+Coefficient name (adsp_x_ipc_bau2adv_pfstr) NOT found in memory files (Parsing: ** Page: 14 Line: 6 <F> ** )
+  -> "[6]hifi front inputs from loudfoutl"          	 	s 38 w &adsp_x_ipc_bau2adv_pfstr &adsp_x_loudf_outl_rel p
+Coefficient name (adsp_x_finpntr) NOT found in memory files (Parsing: ** Page: 14 Line: 7 <G> ** )
+  -> "[7]fin input from front audio out of hifi"             s 38 w &adsp_x_finpntr &adsp_x_ipc_bau2adv_outfl_rel p
+Coefficient name (adsp_x_rinpntr) NOT found in memory files (Parsing: ** Page: 14 Line: 8 <H> ** )
+  -> "[8]rin input from rear audio out of hifi"             	s 38 w &adsp_x_rinpntr &adsp_x_ipc_bau2adv_outrl_rel p
+Coefficient name (adsp_x_centerinpntr) NOT found in memory files (Parsing: ** Page: 14 Line: 9 <I> ** )
+  -> "[9]subwoof input from subwoof audio out of hifi"       s 38 w &adsp_x_centerinpntr &adsp_x_ipc_bau2adv_outswl_rel p
+Coefficient name (adsp_x_subwinpntr) NOT found in memory files (Parsing: ** Page: 14 Line: 10 <J> ** )
+  -> "[10]center input from center audio out of hifi"        s 38 w &adsp_x_subwinpntr &adsp_x_ipc_bau2adv_outswr_rel p
+Coefficient name (sdsp_x_src_ctrlts0) NOT found in memory files (Parsing: ** Page: 15 Line: 4 <D> ** )
+  -> "[d] tune 88.2mhz & 48k & update defaults & enable src+codec & 0db unmute"		m 4a 5c 5ab 6a 7a 9af
+Coefficient name (adsp_x_ipc_bau2adv_pfstr) NOT found in memory files (Parsing: ** Page: 15 Line: 8 <H> ** )
+  -> "open cs auto"          	 	s 38 w &adsp_x_ipc_bau2adv_pfstr &adsp_x_loudf_outl_rel ps 38 w &adsp_x_finpntr &adsp_x_ipc_bau2adv_outfl_rel ps 38 w &adsp_x_rinpntr &adsp_x_ipc_bau2adv_outrl_rel p  s 38 w &adsp_x_centerinpntr &adsp_x_ipc_bau2adv_outswl_rel ps 38 w &adsp_x_subwinpntr &adsp_x_ipc_bau2adv_outswr_rel p
