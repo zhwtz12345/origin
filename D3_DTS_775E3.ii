@@ -1,0 +1,503 @@
+>1 Dirana3 SDK Script Macros for nxp signed images(version 2.6.3.1)
+"[A] Hardware Reset"														m 2a
+"[B] Download BIN to all cores (within 5sec after reset) - advanced audio"	m 13a 3a 13c
+"[C] Download BIN to all cores (within 5sec after reset) - advanced radio"	m 13a 3f 13c 
+"[D] Download BIN to all cores (non-HiFi2 variant) "						m 13a 3h 13d 
+"[E] Tune 88.2MHz & Update defaults & Enable SRC+CODEC & 0dB unmute"	    m 4a 5ab 6a 7a 9af
+"[F] Boot from the flash (within 5 sec after reset) -HiFi2 variant "		m 13a 11c 13c
+"[G] Reset and boot from N205 ROM (without HIFI2 image loading) "			m 2a h10 13a 2b 13b
+
+>2 Reset NXP reference board
+"[A] Reset DiRaNA3"															s 46 w 10 P h50 S 46 w D0 P h50
+"[B] Start Dirana3"															s 38 w E8 p
+
+>3 D3DL_script
+"[A] Run D3DL_script batch file -advanced audio		"					    e C:\usr\NXP\D3-SDK\R7.1.4\bin\download_script.bat 1
+"[B] Run flash app download batch file        		"					    e C:\usr\NXP\D3-SDK\R7.1.4\bin\download_flash_app.bat 1
+"[C] Run flash erase batch file		      			"					    e C:\usr\NXP\D3-SDK\R7.1.4\bin\flash_erase.bat 1
+"[D] Run flash write batch file -advanced audio		"					    e C:\usr\NXP\D3-SDK\R7.1.4\bin\flash_write.bat 1
+"[E] Run boot from flash batch file (via SPI) 		"					    e C:\usr\NXP\D3-SDK\R7.1.4\bin\boot_from_flash.bat 1
+"[F] Run D3DL_script batch file -advanced radio		"					    e C:\usr\NXP\D3-SDK\R7.1.4\bin\download_script_AdvancedRadio.bat 1
+"[G] Run flash write batch file	-advanced radio		"					    e C:\usr\NXP\D3-SDK\R7.1.4\bin\flash_write_AdvancedRadio.bat 1
+"[H] Run D3DL_script batch file -non-HiFi2 variant  "					    e C:\usr\NXP\D3-SDK\R7.1.4\bin\download_script_nonHiFi2Variant.bat 1
+
+
+>4 Tuning
+"[A] Tune to 88.2MHz"														s 38 w 00 10 22 74 P
+"[B] Tune to 94.2 MHz"														s 38 w 00 10 24 CC P
+"[C] Tune to 100.1MHz"														s 38 w 00 10 27 1A P
+"[D] Tune to 101.1MHz"														s 38 w 00 10 27 7E P
+
+>5 Peripheral control
+"[A] Enable Front & Rear DACs"					            				s 38 w a9 32 00 p s 38 w a9 33 00 p 
+"[B] Enable all Audio ADCs"						            				s 38 w a9 28 00 p
+"[C] 48K Samplerate"						            				s 38 w 3F 01 p
+
+>6 Sample Rate Convertors
+"[A] Enable SRC0"															s 38 w &SDSP_X_SRC_CtrlTS0 800000 p
+"[B] Enable SRC1"															s 38 w &SDSP_X_SRC_CtrlTS1 800000 P
+											
+>7 Mode configuration
+"[A] Select Radio"															s 38 w 20 00 p
+"[B] Select SPDIF0 + bitslicer"												s 38 w a9 1e 00 p s 38 w a9 1f 01 p s 38 w 20 15 p	
+"[C] Select Analog AD01"													s 38 w 20 08 p
+"[D] Select Analog AD23"													s 38 w 20 09 p
+"[E] Select Analog AD45"													s 38 w 20 0a p
+"[F] Select IIS_IN1"														S 38 w 20 11 P
+"[G] Sine generator"														S 38 w 20 1F P
+ 
+>8 Audio ADC configuration
+"[A] AD01 HCM 0.5V"															s 38 w a9 00 04 p s 38 w a9 01 04 p
+"[B] AD01 HCM 1.0V"															s 38 w a9 00 03 p s 38 w a9 01 03 p
+"[C] AD01 HCM 1.25V"														s 38 w a9 00 05 p s 38 w a9 01 05 p
+"[D] AD01 HCM 2.0V"															s 38 w a9 00 02 p s 38 w a9 01 02 p
+"[E] AD23 HCM 0.5"															s 38 w a9 02 04 p s 38 w a9 03 04 p
+"[F] AD23 HCM 1.0V"															s 38 w a9 02 03 p s 38 w a9 03 03 p
+"[G] AD23 HCM 1.25V"														s 38 w a9 02 05 p s 38 w a9 03 05 p
+"[H] AD23 HCM 2.0V"															s 38 w a9 02 02 p s 38 w a9 03 02 p
+"[I] AD45 HCM 0.5"															s 38 w a9 04 04 p s 38 w a9 05 04 p
+"[J] AD45 HCM 1.0V"															s 38 w a9 04 03 p s 38 w a9 05 03 p
+"[K] AD45 HCM 1.25V"														s 38 w a9 04 05 p s 38 w a9 05 05 p
+"[L] AD45 HCM 2.0V"															s 38 w a9 04 02 p s 38 w a9 05 02 p
+
+>9 Volume control & mute
+"[A] Volume 0dB" 															s 38 w &ADSP_Y_Vol_Main1P 07ff P S 38 w &ADSP_Y_Vol_Main2P 0080 P 
+"[B] Volume -25dB" 															s 38 w &ADSP_Y_Vol_Main1P 00e6 P s 38 w &ADSP_Y_Vol_Main2P 0040 p 
+"[C] Volume -35dB" 															s 38 w &ADSP_Y_Vol_Main1P 00e6 P S 38 w &ADSP_Y_Vol_Main2P 0014 p 
+"[D] Volume -40dB" 															s 38 w &ADSP_Y_Vol_Main1P 00e6 P S 38 w &ADSP_Y_Vol_Main2P 000b p
+"[E] Volume -50dB" 															s 38 w &ADSP_Y_Vol_Main1P 0068 P S 38 w &ADSP_Y_Vol_Main2P 0008 p 
+"[F] Unmute primary" 														s 38 w &ADSP_Y_Mute_P 07ff p
+
+>10 HiFi control - only when advanced audio images are loaded
+"[A] HiFi front inputs from FrontOutL"          		  					s 38 w &ADSP_X_IPC_BAU2ADV_pFStr &ADSP_X_FrontOutL_REL p
+"[B] FDAC input from Front audio out of HiFi"             					s 38 w &ADSP_X_FDACpntr &ADSP_X_IPC_BAU2ADV_OutFL_REL p
+"[C] FDAC input from Rear audio out of HiFi"               					s 38 w &ADSP_X_FDACpntr &ADSP_X_IPC_BAU2ADV_OutRL_REL p
+"[D] FDAC input from Center/Subwoofer audio out of HiFi"  					s 38 w &ADSP_X_FDACpntr &ADSP_X_IPC_BAU2ADV_OutSwL_REL p
+"[E] FDAC input from Secondary audio out of HiFi"         					s 38 w &ADSP_X_FDACpntr &ADSP_X_IPC_BAU2ADV_OutS1L_REL p
+"[F] Sine freq to 250Hz"                        		   					s 38 w D0 00 2A 8F 04 p
+"[G] Sine freq to 500Hz"                       			   					s 38 w D0 00 53 1E 09 p
+"[H] Attenuation to -12dB"                      		   					s 38 w D0 01 00 00 20 p
+"[I] Attenuation to -18 dB"                     							s 38 w D0 01 00 00 10 p
+"[J] Attenuation back to -6 dB"                 							s 38 w D0 01 00 00 40 p
+
+>11 Boot from Flash
+"[A] Send radio/generic keycodes via i2c (after reset) "  					s 38 w E1 00 FA 15 61 p	\\
+																			s 38 w E1 00 50 A3 88 p	\\
+																			s 38 w E1 00 C2 7E AF p	\\
+																			s 38 w E1 00 0C 7B E4 p	\\
+																			s 38 w E1 00 1B C1 C7 p	\\
+																			s 38 w E1 00 85 D4 F7 p	\\
+																			s 38 w E1 00 7F 43 C8 p \\
+																			S 38 W E1 00 EE 9D F4 p \\
+																			S 38 W E1 00 14 90 92 p \\
+																			S 38 W E1 00 EB A6 AE p \\
+																			S 38 W E1 00 FC BE E9 p \\
+																			S 38 W E1 00 EF DA 12 P																			
+																			
+"[B] Send audio feature keycodes via i2c (after reset) " 					s 38 w E1 00 C9 B9 58 p	\\
+																			s 38 w E1 00 5E 10 DC p	\\
+																			s 38 w E1 00 60 7B 82 p	\\
+																			s 38 w E1 00 05 54 EF p	\\
+																			s 38 w E1 00 6A 8A 02 p	\\
+																			s 38 w E1 00 50 2D 90 p	\\
+																			s 38 w E1 00 2C 42 A1 p	\\
+																			s 38 w E1 00 C3 D2 35 p \\
+																			s 38 w E1 00 DE D4 11 p	\\
+																			s 38 w E1 00 D5 85 CA p	\\																			
+																			s 38 w E1 00 E1 F6 A3 p	\\																			
+																			s 38 w E1 00 28 73 0E p	\\																			
+																			s 38 w E1 00 E4 B4 37 p	\\																			
+																			s 38 w E1 00 D2 F6 BE p	\\																			
+																			s 38 w E1 00 07 7F A7 p	\\																			
+																			s 38 w E1 00 3B 3B B1 p
+																			
+"[C] Run boot from flash via i2c (after reset)" 							s 38 w EB 00 00 00 p h50 \\
+																			s 38 w EB 01 00 00 p h50 \\
+																			s 38 w EB 02 00 00 p h50 \\
+																			s 38 w EB 03 00 00 p h50 \\
+																			s 38 w EB 04 00 00 p h50 \\
+																			s 38 w EB 05 00 00 p h50 \\
+																			s 38 w EB 05 0F 01 p h50 \\
+																			s 38 w EB 05 10 02 p h50 \\
+																			s 38 w EB 05 1F 03 p h50 \\
+																			s 38 w EB 05 50 04 p h50 \\
+																			s 38 w EB 05 5F 05 p h50 \\
+																			s 38 w EB 05 6E 06 p h50 \\
+																			s 38 w EB 05 7D 07 p h50 \\
+																			s 38 w EB 05 8C 08 p h50 \\
+																			s 38 w EB 46 0F 00 p h50 \\
+																			s 38 w EB 06 00 01 p h50 \\
+																			s 38 w E8 p
+
+
+>12 Flash Programming 
+"[A] Hardware Reset"														m 2a
+"[B] Download flash app (within 5 sec after reset)  "						m 3b
+"[C] Erase the flash (after flash app download)     "	    				m 3c
+"[D] Program the flash (after flash app download) - advanced audio"			m 3d
+"[E] Program the flash (after flash app download) - advanced radio"			m 3g
+>13 Start-up script for R7.1 firmware
+"[A] Boot-time patch loading"                            					s 38 W E1 00 1A E0 AB P \\
+																			s 38 W E1 00 8A EB C2 P \\
+																			s 38 W E1 00 F9 42 9E p	\\ 
+																			s 38 W E1 00 09 0D F0 P \\
+																			s 38 W E1 00 6C 1D F3 P \\																	
+																			S 38 W EA 80 00 00 05 E4 P h100\\ 
+																			S 38 W EE 04 40 5E 00 56 02 00 41 00 60 10 34 10 50 00 14 P \\
+																			S 38 W EE A0 3E 60 7C FF 07 10 74 F9 06 00 40 20 00 00 48 P \\
+																			S 38 W EE FD 04 00 40 00 00 2C 48 11 F0 00 5C 10 50 00 14 P \\
+																			S 38 W EE 00 30 01 50 10 A0 00 14 11 F0 00 14 0E 00 10 50 P \\
+																			S 38 W EE 10 50 00 14 00 60 1C 04 00 00 E0 68 50 50 00 14 P \\
+																			S 38 W EE 00 60 1A 04 00 00 60 41 DB F2 00 38 50 00 00 50 P \\
+																			S 38 W EE 10 50 00 14 00 60 0D 04 18 F3 0E 54 19 F3 0E 54 P \\
+																			S 38 W EE 1A F3 0E 54 1B F3 0E 54 1C F3 0E 54 1D F3 0E 54 P \\
+																			S 38 W EE 1E F3 0E 54 1F F3 0E 54 28 F3 0E 54 29 F3 0E 54 P \\
+																			S 38 W EE 2A F3 0E 54 2B F3 0E 54 2C F3 0E 54 2D F3 0E 54 P \\
+																			S 38 W EE 2E F3 0E 54 2F F3 0E 54 41 F3 00 5C 10 50 00 14 P \\
+																			S 38 W EE F9 F6 00 5C 10 10 00 14 41 F3 00 14 42 F3 00 5C P \\
+																			S 38 W EE 10 50 00 14 F9 F6 00 5C 10 10 00 14 42 F3 00 14 P \\
+																			S 38 W EE 19 F2 00 5C 10 50 00 14 D1 3E 60 7C 23 F2 00 5C P \\
+																			S 38 W EE 10 50 00 14 D1 3E 60 7C 4A F2 00 5C 10 50 00 14 P \\
+																			S 38 W EE 0B 00 00 68 40 30 00 14 CE 3E 50 7C 0A 00 00 68 P \\
+																			S 38 W EE 40 30 00 14 CE 3E 50 7C D1 3E 60 7C 1B F2 00 6C P \\
+																			S 38 W EE FB F6 00 38 FB F6 00 6C 1B F2 00 38 2A F2 00 38 P \\
+																			S 38 W EE 2F F2 01 5C 50 50 00 14 7C 17 00 50 00 30 00 14 P \\
+																			S 38 W EE D9 3E 60 7C DF 3E 50 7C 2F 02 00 40 E7 3E 00 48 P \\
+																			S 38 W EE 0D 17 00 50 00 30 00 14 DF 3E 60 7C 00 00 00 7C P \\
+																			S 38 W EE 2F 02 00 40 31 3F 00 48 34 1C 00 50 10 50 00 14 P \\
+																			S 38 W EE 81 F2 01 5C 40 30 00 14 87 2C 60 7C 87 2C 50 7C P \\
+																			S 38 W EE 81 02 00 40 74 3F 00 48 56 F2 00 5C 10 50 00 14 P \\
+																			S 38 W EE 01 00 00 68 50 90 00 14 FB 3E 50 7C 25 F2 00 5C P \\
+																			S 38 W EE 10 50 00 14 C4 17 70 7E 55 F2 00 5C 10 50 00 14 P \\
+																			S 38 W EE 00 02 00 68 44 02 EC 7F 50 A0 00 14 55 F2 00 14 P \\
+																			S 38 W EE 43 F0 01 36 50 50 00 14 FB 3E 50 7C 00 00 00 7C P \\
+																			S 38 W EE 49 00 00 41 FF 07 10 74 3C F0 00 36 10 50 00 14 P \\
+																			S 38 W EE 01 3F 60 7C 00 00 00 7C 4D 02 00 40 FF FF 7F 49 P \\
+																			S 38 W EE 1F F2 00 5C 10 50 00 14 07 3F 50 7C 00 00 00 7C P \\
+																			S 38 W EE 48 00 00 41 00 00 10 74 48 F0 01 36 50 50 00 14 P \\
+																			S 38 W EE 0D 3F 60 7C 00 00 00 7C 1E 02 00 40 00 00 00 48 P \\
+																			S 38 W EE 3D F0 01 36 50 50 00 14 C3 17 50 7C 2F 02 00 40 P \\
+																			S 38 W EE 81 18 00 48 2E F2 01 5C 50 50 00 14 01 00 00 68 P \\
+																			S 38 W EE 40 30 00 14 1D 3F 50 7C 02 00 00 68 40 30 00 14 P \\
+																			S 38 W EE 1D 3F 50 7C 03 00 00 68 40 30 00 14 24 3F 60 7C P \\
+																			S 38 W EE 13 F0 01 36 04 00 00 50 88 00 00 F4 50 50 00 14 P \\
+																			S 38 W EE 10 54 58 7C D0 54 68 7C 71 F2 00 14 1A F2 00 6C P \\
+																			S 38 W EE 2E F2 00 38 B4 09 E0 7F 2D F2 03 5C 3C F2 80 79 P \\
+																			S 38 W EE B1 3F E0 7F 2D F2 03 5C AA 00 00 50 FA 06 00 40 P \\
+																			S 38 W EE B0 17 00 48 00 00 F4 7F 00 00 00 7C 00 00 00 7C P \\
+																			S 38 W EE 25 F2 00 5C 10 50 00 14 3A 3F 50 7C 64 F2 00 5C P \\
+																			S 38 W EE 10 50 00 14 10 E0 00 14 78 17 20 7C 64 F2 00 14 P \\
+																			S 38 W EE 00 00 00 7C 56 F2 00 5C 10 50 00 14 00 01 00 68 P \\
+																			S 38 W EE 50 90 00 14 45 3F 50 7C 55 F2 00 5C 10 50 00 14 P \\
+																			S 38 W EE 40 00 00 68 40 02 EC 7F 50 A0 00 14 55 F2 00 14 P \\
+																			S 38 W EE 56 F2 00 5C 10 50 00 14 00 00 04 68 50 90 00 14 P \\
+																			S 38 W EE 50 3F 50 7C 55 F2 00 5C 10 50 00 14 00 00 10 68 P \\
+																			S 38 W EE 48 02 EC 7F 50 A0 00 14 55 F2 00 14 56 F2 00 5C P \\
+																			S 38 W EE 10 50 00 14 20 00 00 68 50 90 00 14 5D 3F 50 7C P \\
+																			S 38 W EE 55 F2 00 5C 10 50 00 14 10 00 00 68 50 A0 00 14 P \\
+																			S 38 W EE 55 F2 00 14 3E 02 EC 7F 3B 00 00 41 FF 07 10 74 P \\
+																			S 38 W EE 56 F2 00 5C 10 50 00 14 00 00 01 68 50 90 00 14 P \\
+																			S 38 W EE 67 3F 50 7C 55 F2 00 5C 10 50 00 14 00 20 00 68 P \\
+																			S 38 W EE 50 A0 00 14 55 F2 00 14 1F F2 00 5C 10 50 00 14 P \\
+																			S 38 W EE 52 17 50 7C 00 00 00 3C 00 00 00 7C B1 3F E0 7F P \\
+																			S 38 W EE 2D F2 03 5C AA 00 00 50 FA 06 00 40 4C 17 00 48 P \\
+																			S 38 W EE 00 00 F4 7F 00 00 00 7C 00 00 00 7C A6 F2 00 5C P \\
+																			S 38 W EE 10 50 00 14 01 00 00 68 50 90 00 14 82 3F 50 7C P \\
+																			S 38 W EE 77 F2 00 5C 10 50 00 14 77 1C 70 7E A5 F2 00 5C P \\
+																			S 38 W EE 10 50 00 14 00 02 00 68 96 02 EC 7F 50 A0 00 14 P \\
+																			S 38 W EE A5 F2 00 14 4C F0 00 36 10 50 00 14 88 3F 60 7C P \\
+																			S 38 W EE 00 00 00 7C 9F 02 00 40 FF FF 7F 49 4D F0 01 36 P \\
+																			S 38 W EE 50 50 00 14 76 1C 50 7C 81 02 00 40 0D 1D 00 48 P \\
+																			S 38 W EE 80 F2 01 5C 50 50 00 14 01 00 00 68 40 30 00 14 P \\
+																			S 38 W EE 98 3F 50 7C 02 00 00 68 40 30 00 14 98 3F 50 7C P \\
+																			S 38 W EE 03 00 00 68 40 30 00 14 9F 3F 60 7C 13 F0 01 36 P \\
+																			S 38 W EE 04 00 00 50 88 00 00 F4 50 50 00 14 10 54 58 7C P \\
+																			S 38 W EE D0 54 68 7C C4 F2 00 14 74 F2 00 6C 80 F2 00 38 P \\
+																			S 38 W EE B4 09 E0 7F 7F F2 03 5C 8E F2 80 79 7F F2 00 5C P \\
+																			S 38 W EE 10 50 00 14 00 00 30 50 00 30 00 14 60 1C 50 7C P \\
+																			S 38 W EE 00 00 00 3C 00 00 00 7C B1 3F E0 7F 7F F2 03 5C P \\
+																			S 38 W EE AA 00 00 50 63 1C F0 7F 00 00 00 3C 00 00 00 7C P \\
+																			S 38 W EE D0 50 00 14 00 00 20 68 50 90 00 14 CC 3F 62 7C P \\
+																			S 38 W EE 00 00 00 3C 00 00 00 7C D0 50 00 14 00 00 08 68 P \\
+																			S 38 W EE 50 90 00 14 CF 0E 62 7C 00 00 00 3C 00 00 00 7C P \\
+																			S 38 W EE D0 50 00 14 00 00 40 68 50 90 00 14 A3 0D 62 7C P \\
+																			S 38 W EE 00 00 00 3C 00 00 00 7C D0 50 00 14 00 00 10 68 P \\
+																			S 38 W EE 50 90 00 14 47 10 62 7C 00 00 00 3C 00 00 00 7C P \\
+																			S 38 W EE 00 00 D0 7F 00 00 00 3C 00 00 00 7C CC 3F 00 7D P \\
+																			S 38 W EE 00 00 00 3C 00 00 00 7C E7 0C E0 7F C9 02 00 40 P \\
+																			S 38 W EE 00 00 00 7C 08 00 10 50 10 50 00 14 00 60 1C 04 P \\
+																			S 38 W EE 00 00 00 50 10 50 00 14 00 60 1A 04 09 00 10 50 P \\
+																			S 38 W EE 10 50 00 14 00 60 1C 04 00 00 00 50 10 50 00 14 P \\
+																			S 38 W EE 00 60 1A 04 D8 F2 00 14 0A 00 10 50 10 50 00 14 P \\
+																			S 38 W EE 00 60 1C 04 00 00 00 50 10 50 00 14 00 60 1A 04 P \\
+																			S 38 W EE 0B 00 10 50 10 50 00 14 00 60 1C 04 00 00 00 50 P \\
+																			S 38 W EE 10 50 00 14 00 60 1A 04 00 00 00 41 D7 F2 00 38 P \\
+																			S 38 W EE D9 F2 00 38 DA F2 00 38 00 00 60 41 DB F2 00 38 P \\
+																			S 38 W EE 0E 00 10 50 10 50 00 14 00 60 1C 04 00 00 E0 68 P \\
+																			S 38 W EE 50 50 00 14 00 60 1A 04 00 00 00 68 0F 00 10 50 P \\
+																			S 38 W EE 10 50 00 14 00 60 1C 04 50 50 00 14 00 60 1A 04 P \\
+																			S 38 W EE 00 00 D0 7F 5E 00 00 41 00 00 10 74 EF 40 D2 03 P \\
+																			S 38 W EE 58 79 33 E4 00 00 00 00 00 00 00 00 00 00 00 00 P \\																			
+																			S 38 W EA 81 00 00 02 88 P 								h100\\
+																			S 38 W EE 00 80 28 00 5F 0B 00 41 00 60 10 34 10 50 00 14 P \\
+																			S 38 W EE 77 3F 60 7C FF 07 10 74 11 F0 00 5C 10 50 00 14 P \\
+																			S 38 W EE 00 30 01 50 10 A0 00 14 11 F0 00 14 F5 00 00 40 P \\
+																			S 38 W EE D0 3F 00 48 58 0F 00 40 00 F0 00 49 10 00 00 48 P \\
+																			S 38 W EE 62 0B 00 41 1B 00 12 74 00 00 12 74 0F 00 12 74 P \\
+																			S 38 W EE 20 00 10 74 80 0F 00 40 60 8F 01 48 7C F0 00 5C P \\
+																			S 38 W EE 10 50 00 14 C8 3F 50 7C 00 00 00 7C 00 00 00 7C P \\
+																			S 38 W EE B9 08 E0 7F DB F0 00 5C 62 0B 00 41 58 FF 01 1C P \\
+																			S 38 W EE 80 FF 80 78 40 FF 00 5C 10 50 00 5E 10 50 40 16 P \\
+																			S 38 W EE 48 FF 00 14 41 FF 00 5C 10 50 00 5E 10 50 40 16 P \\
+																			S 38 W EE 49 FF 00 14 42 FF 00 5C 10 50 00 5E 10 50 40 16 P \\
+																			S 38 W EE 4A FF 00 14 43 FF 00 5C 10 50 00 5E 10 50 40 16 P \\
+																			S 38 W EE 4B FF 00 14 44 FF 00 5C 10 50 00 5E 10 50 40 16 P \\
+																			S 38 W EE 4C FF 00 14 45 FF 00 5C 10 50 00 5E 10 50 40 16 P \\
+																			S 38 W EE 4D FF 00 14 46 FF 00 5C 10 50 00 5E 10 50 40 16 P \\
+																			S 38 W EE 4E FF 00 14 47 FF 00 5C 10 50 00 5E 10 50 40 16 P \\
+																			S 38 W EE 4F FF 00 14 80 FF 00 78 5A FF 02 5C 50 F3 80 78 P \\
+																			S 38 W EE F2 3F E0 7F 48 FF 00 5C 00 00 00 7C F2 3F E0 7F P \\
+																			S 38 W EE 00 60 40 16 49 FF 00 5C F2 3F E0 7F 00 60 40 16 P \\
+																			S 38 W EE 4A FF 00 5C F2 3F E0 7F 00 60 40 16 4B FF 00 5C P \\
+																			S 38 W EE F2 3F E0 7F 00 60 40 16 4C FF 00 5C F2 3F E0 7F P \\
+																			S 38 W EE 00 60 40 16 4D FF 00 5C F2 3F E0 7F 00 60 40 16 P \\
+																			S 38 W EE 4E FF 00 5C F2 3F E0 7F 00 60 40 16 4F FF 00 5C P \\
+																			S 38 W EE 00 60 00 16 60 FB 00 36 10 50 00 14 C8 3F 60 7C P \\
+																			S 38 W EE 61 0B 00 41 00 60 10 34 10 50 00 14 FF 07 10 74 P \\
+																			S 38 W EE BC 23 60 7C BC 23 50 7C 50 03 00 40 00 33 01 48 P \\
+																			S 38 W EE 61 0B 00 41 00 60 10 34 00 00 10 74 10 50 00 14 P \\
+																			S 38 W EE BC 23 50 7C BC 23 60 7C 50 03 00 40 00 73 04 48 P \\
+																			S 38 W EE 7C F0 00 5C 10 50 00 14 EF 3F 50 7C 50 00 00 50 P \\
+																			S 38 W EE 10 50 00 14 00 60 0D 04 00 60 0D 4C 00 60 0D 4C P \\
+																			S 38 W EE 00 60 0D 4C 40 FF 0D 44 41 FF 0D 44 42 FF 0D 44 P \\
+																			S 38 W EE 43 FF 0D 44 44 FF 0D 44 45 FF 0D 44 46 FF 0D 44 P \\
+																			S 38 W EE 47 FF 0D 44 A8 F0 0D 44 A9 F0 0D 44 AA F0 0D 44 P \\
+																			S 38 W EE AB F0 0D 44 AC F0 0D 44 AD F0 0E 44 AE F0 0E 44 P \\
+																			S 38 W EE AF F0 0E 44 60 FB 00 36 10 50 00 14 EF 3F 60 7C P \\
+																			S 38 W EE 00 00 00 7C B0 00 00 40 FF FF 7F 48 CE 00 F0 7F P \\
+																			S 38 W EE 40 00 00 50 10 50 00 14 10 50 00 14 40 30 00 14 P \\
+																			S 38 W EE F8 3F 10 7C FF FF 7F F4 59 FF 00 6C 5A FF 00 38 P \\
+																			S 38 W EE 5A FF 00 5C 10 50 00 5E 10 E0 00 14 5A FF 00 14 P \\
+																			S 38 W EE 10 74 18 7C 00 00 D0 7F D0 54 28 7C 10 A0 00 14 P \\
+																			S 38 W EE 50 43 DE 1D 51 9E CB 92 00 00 00 00 00 00 00 00 P \\
+																			S 38 W EA 82 00 00 04 D8 P 								h100\\  
+																			S 38 W EE 00 80 4D 00 2B 03 00 41 00 60 10 34 10 50 00 14 P \\
+																			S 38 W EE FE 3E 60 7C FF 07 10 74 11 F0 00 5C 10 50 00 14 P \\
+																			S 38 W EE 00 30 01 50 10 A0 00 14 11 F0 00 14 8A 02 00 40 P \\
+																			S 38 W EE 41 3F 00 48 2B 05 00 40 44 3F 00 48 2C 03 00 41 P \\
+																			S 38 W EE 80 07 12 74 00 02 10 74 27 0D 00 40 00 40 00 49 P \\
+																			S 38 W EE 05 00 00 49 08 00 00 48 C5 09 00 40 00 00 00 48 P \\
+																			S 38 W EE BC 0C 00 40 00 60 01 48 C0 0C 00 40 00 80 01 48 P \\
+																			S 38 W EE BE 0C 00 40 00 C0 00 48 C2 0C 00 40 00 C0 00 48 P \\
+																			S 38 W EE C6 0C 00 40 30 00 00 48 F2 0C 00 40 30 00 00 48 P \\
+																			S 38 W EE CA 02 00 41 00 03 12 74 80 01 12 74 00 03 12 74 P \\
+																			S 38 W EE C0 00 12 74 25 03 00 41 FF 07 12 74 05 03 00 41 P \\
+																			S 38 W EE 40 00 12 74 40 00 12 74 07 03 00 41 09 3F F0 7F P \\
+																			S 38 W EE 00 02 12 74 19 00 12 74 09 F3 00 36 10 50 00 14 P \\
+																			S 38 W EE 00 00 80 68 40 30 00 14 09 3F 50 7C 11 60 00 14 P \\
+																			S 38 W EE 11 60 00 14 11 60 00 14 00 00 08 68 50 30 00 14 P \\
+																			S 38 W EE 08 F3 00 26 57 F2 00 36 10 50 00 14 9A 1C 50 7C P \\
+																			S 38 W EE 09 03 00 41 40 00 10 74 2C F3 01 36 2D F3 03 36 P \\
+																			S 38 W EE D1 F2 00 5C 10 50 00 14 28 FD 00 5C 00 30 00 14 P \\
+																			S 38 W EE D0 54 28 7C 50 54 18 7C D6 F2 00 26 C9 FB 00 5C P \\
+																			S 38 W EE 10 50 00 14 25 3F 60 7C 2B FD 01 5C 50 50 00 14 P \\
+																			S 38 W EE 27 3F 60 7C 10 E0 00 14 2B FD 00 14 3E 14 E0 7F P \\
+																			S 38 W EE 00 00 00 7C 00 00 00 7C BB 14 E0 7F 00 00 00 7C P \\
+																			S 38 W EE 00 00 00 7C 29 FD 00 6C 2B FD 00 38 2E FC 00 5C P \\
+																			S 38 W EE 10 50 00 14 10 00 00 68 40 30 00 14 2F 3F 50 7C P \\
+																			S 38 W EE 00 00 00 7C 2E FC 00 6C 2C FD 00 38 D1 F2 00 5C P \\
+																			S 38 W EE 10 50 00 14 2C FD 01 5C 40 30 00 14 3C 3F 10 7C P \\
+																			S 38 W EE 2A FD 01 5C 50 50 00 14 10 E0 00 14 2A FD 00 14 P \\
+																			S 38 W EE 9A 1C 20 7C 9A 1C 10 7C 2C FD 00 6C 2E FC 00 38 P \\
+																			S 38 W EE 27 FD 00 6C 2A FD 00 38 9A 1C F0 7F 2E 0C 00 40 P \\
+																			S 38 W EE 10 00 00 48 C6 1B F0 7F 09 03 00 41 00 08 10 74 P \\
+																			S 38 W EE 10 70 00 14 3E F1 00 26 33 F5 00 5C 10 50 00 14 P \\
+																			S 38 W EE 05 00 00 50 00 30 00 14 51 3F 22 7C 57 3F 12 7C P \\
+																			S 38 W EE 00 00 00 7C 00 00 00 7C 2D 0D 00 40 8A 21 00 48 P \\
+																			S 38 W EE 00 00 F4 7F 2D 0D 00 40 A7 03 00 48 21 F0 00 14 P \\
+																			S 38 W EE 00 00 F4 7F F3 0F 00 40 28 00 00 48 21 F0 00 14 P \\
+																			S 38 W EE F3 0F 00 40 28 00 00 48 00 0C 00 40 00 FF FF 49 P \\
+																			S 38 W EE 00 00 00 49 00 01 00 49 00 02 00 49 00 04 00 49 P \\
+																			S 38 W EE 00 07 00 49 00 09 00 49 00 09 00 49 00 08 00 49 P \\
+																			S 38 W EE 00 04 00 49 00 FE FF 49 00 F4 FF 49 00 E8 FF 49 P \\
+																			S 38 W EE 00 DB FF 49 00 D2 FF 49 00 D0 FF 49 00 DA FF 49 P \\
+																			S 38 W EE 00 F6 FF 49 00 2A 00 49 00 7C 00 49 00 EF 00 49 P \\
+																			S 38 W EE 00 85 01 49 00 3D 02 49 00 14 03 49 00 03 04 49 P \\
+																			S 38 W EE 00 FF 04 49 00 FD 05 49 00 EE 06 49 00 C5 07 49 P \\
+																			S 38 W EE 00 74 08 49 00 EF 08 49 00 2F 09 49 20 0C 00 40 P \\
+																			S 38 W EE 00 FE FF 49 00 FE FF 49 00 FE FF 49 00 FE FF 49 P \\
+																			S 38 W EE 00 00 00 49 00 03 00 49 00 07 00 49 00 0B 00 49 P \\
+																			S 38 W EE 00 0E 00 49 00 10 00 49 00 0E 00 49 00 08 00 49 P \\
+																			S 38 W EE 00 FD FF 49 00 ED FF 49 00 DB FF 49 00 CB FF 49 P \\
+																			S 38 W EE 00 C2 FF 49 00 C6 FF 49 00 E2 FF 49 00 1C 00 49 P \\
+																			S 38 W EE 00 7D 00 49 00 09 01 49 00 C3 01 49 00 A9 02 49 P \\
+																			S 38 W EE 00 B4 03 49 00 D8 04 49 00 07 06 49 00 2D 07 49 P \\
+																			S 38 W EE 00 37 08 49 00 13 09 49 00 AF 09 49 00 01 0A 49 P \\
+																			S 38 W EE 40 0C 00 40 00 FE FF 49 00 FD FF 49 00 FB FF 49 P \\
+																			S 38 W EE 00 FA FF 49 00 FA FF 49 00 FA FF 49 00 FD FF 49 P \\
+																			S 38 W EE 00 02 00 49 00 09 00 49 00 10 00 49 00 16 00 49 P \\
+																			S 38 W EE 00 18 00 49 00 15 00 49 00 0A 00 49 00 F8 FF 49 P \\
+																			S 38 W EE 00 E0 FF 49 00 C7 FF 49 00 B5 FF 49 00 B3 FF 49 P \\
+																			S 38 W EE 00 CD FF 49 00 10 00 49 00 85 00 49 00 35 01 49 P \\
+																			S 38 W EE 00 20 02 49 00 43 03 49 00 90 04 49 00 F6 05 49 P \\
+																			S 38 W EE 00 5B 07 49 00 A6 08 49 00 BC 09 49 00 84 0A 49 P \\
+																			S 38 W EE 00 ED 0A 49 60 0C 00 40 00 00 00 49 00 FF FF 49 P \\
+																			S 38 W EE 00 FD FF 49 00 FA FF 49 00 F7 FF 49 00 F4 FF 49 P \\
+																			S 38 W EE 00 F3 FF 49 00 F4 FF 49 00 F8 FF 49 00 00 00 49 P \\
+																			S 38 W EE 00 0C 00 49 00 17 00 49 00 20 00 49 00 23 00 49 P \\
+																			S 38 W EE 00 1B 00 49 00 08 00 49 00 EA FF 49 00 C8 FF 49 P \\
+																			S 38 W EE 00 AA FF 49 00 9F FF 49 00 B9 FF 49 00 08 00 49 P \\
+																			S 38 W EE 00 9C 00 49 00 7E 01 49 00 AE 02 49 00 21 04 49 P \\
+																			S 38 W EE 00 C2 05 49 00 72 07 49 00 0E 09 49 00 6D 0A 49 P \\
+																			S 38 W EE 00 6E 0B 49 00 F6 0B 49 80 0C 00 40 00 01 00 49 P \\
+																			S 38 W EE 00 01 00 49 00 01 00 49 00 00 00 49 00 FD FF 49 P \\
+																			S 38 W EE 00 F8 FF 49 00 F2 FF 49 00 EC FF 49 00 E9 FF 49 P \\
+																			S 38 W EE 00 EA FF 49 00 F1 FF 49 00 FF FF 49 00 11 00 49 P \\
+																			S 38 W EE 00 23 00 49 00 2E 00 49 00 2E 00 49 00 1C 00 49 P \\
+																			S 38 W EE 00 F9 FF 49 00 CB FF 49 00 9F FF 49 00 8A FF 49 P \\
+																			S 38 W EE 00 A5 FF 49 00 09 00 49 00 CC 00 49 00 F6 01 49 P \\
+																			S 38 W EE 00 84 03 49 00 61 05 49 00 67 07 49 00 64 09 49 P \\
+																			S 38 W EE 00 22 0B 49 00 00 D0 7F 00 6E 0C 49 00 1F 0D 49 P \\
+																			S 38 W EE 9C 9E 55 41 BA A1 1B E7 00 00 00 00 00 00 00 00 P 
+ 
+
+"[B] Required initialization for N207 ROM " 					      	                         h500   	                        S 38 W FF 22 00 4D 10 00 03 40 00 P \\
+																			S 38 W FF 22 00 4D 10 00 03 40 02 P \\
+																			S 38 W FA 00 19 0C A8 2A 10 B5 70 4C 45 D1 0C 08 5B 6B E3 D0 07 00 5B P \\
+																			S 38 W FA 00 19 0C B8 40 85 25 01 63 E3 43 AB 20 00 D1 02 FB 19 F7 60 P \\
+																			S 38 W FA 00 19 0C C8 BD 70 20 00 46 04 B5 10 FE D8 F7 60 6B 81 48 3C P \\
+																			S 38 W FA 00 19 0C D8 D1 03 2C 01 0E 00 04 08 E0 02 0E 09 02 09 B2 C8 P \\
+																			S 38 W FA 00 19 0C E8 42 81 0E 09 22 40 D8 03 18 40 1A 10 1A 08 E0 00 P \\
+																			S 38 W FA 00 19 0C F8 D2 10 28 20 21 10 22 00 F7 60 46 10 22 10 FA FA P \\
+																			S 38 W FA 00 19 0D 08 20 02 46 21 FA 36 F7 EF 6B D0 4A 2C 21 01 1C 64 P \\
+																			S 38 W FA 00 19 0D 18 43 01 40 A1 BD 10 63 D1 B0 92 B5 70 46 04 25 01 P \\
+																			S 38 W FA 00 19 0D 28 68 50 95 01 B2 C0 46 16 D0 01 28 D8 D1 19 28 D9 P \\
+																			S 38 W FA 00 19 0D 38 D1 01 2C 00 E0 01 22 00 02 52 22 01 A8 02 23 00 P \\
+																			S 38 W FA 00 19 0D 48 00 9C E0 05 18 C5 19 A4 70 6C 68 64 42 8B 1C 5B P \\
+																			S 38 W FA 00 19 0D 58 92 00 D3 F7 1C 40 1E 49 68 72 AB 01 FE 1B F7 F0 P \\
+																			S 38 W FA 00 19 0D 68 BD 70 B0 12 46 20 46 32 FF 72 F7 60 30 40 48 14 P \\
+																			S 38 W FA 00 19 0D 78 6B 40 6B 81 D1 03 2C 01 0E 09 04 09 E0 02 0E 00 P \\
+																			S 38 W FA 00 19 0D 88 B2 C9 02 00 42 81 0E 00 22 C0 D8 03 18 40 1A 10 P \\
+																			S 38 W FA 00 19 0D 98 1A 08 E0 00 D2 E3 28 80 21 10 22 00 F7 60 46 10 P \\
+																			S 38 W FA 00 19 0D A8 22 10 FA A8 20 03 46 21 F9 E4 F7 EF 6B C8 49 03 P \\
+																			S 38 W FA 00 19 0D B8 40 A5 1C E4 63 CD 43 05 00 00 E7 D2 00 19 7F C0 P \\
+																			S 38 W FA 00 19 0D C8 00 19 76 80 P \\
+																			S 38 W FA 00 18 04 A4 1C E0 21 10 FB FE F0 10 P \\
+																			S 38 W FA 00 18 04 B4 F0 10 1C E0 22 00 FB F7 P \\
+																			S 38 W FA 00 18 05 10 1C 60 21 10 FB C8 F0 10 P \\
+																			S 38 W FA 00 18 05 20 F0 10 1C 60 22 00 FB C1 P \\
+																			S 38 W FA 00 18 07 3C FA C6 F0 10 P \\
+																			S 38 W FA 00 18 08 78 FA 52 F0 10 P \\
+																			S 38 W FA 00 18 09 BC F9 86 F0 10 P \\
+																			S 38 W F0 02 0B 00 3E 8A P \\
+																			S 38 W F1 00 ED 00 3F 61 P \\
+																			S 38 W F2 02 8C 00 3E CD P \\
+																			S 38 W F1 4B 64 00 13 P \\
+																			S 38 W F1 43 ED 07 FF P \\
+																			S 38 W F1 45 ED 07 FF P 
+																			
+"[C] Required initialization for boot from flash/host"				h500   	S 38 W FF 22 00 4D 10 00 03 40 00 P \\
+																			S 38 W FF 22 00 4D 10 00 03 40 02 P \\
+																			S 38 W F0 02 0B 00 3E 8A P \\
+																			S 38 W F1 00 ED 00 3F 61 P \\
+																			S 38 W F2 02 8C 00 3E CD P \\
+																			S 38 W F1 4B 64 00 13 P \\
+																			S 38 W F1 43 ED 07 FF P \\
+																			S 38 W F1 45 ED 07 FF P									
+>14 HiFi DTS Boot from PC
+"[1] Hardware Reset"										m 2a
+"[2] Run D3DL_script batch file               		" e C:\usr\NXP\D3-SDK\R6.0.5.5\bin\download_script.bat 1
+"[3] Tune 88.2MHz & 48K & Update defaults & Enable SRC+CODEC & 0dB unmute"		m 4a 5c 5ab 6a 7a 9af
+"[4] Tune 97.1MHz" s 38 w 00 10 25 EE p
+"[5] DA45"                                                              s 38 w A9 34 00 p
+"[6]HiFi front inputs from LoudfOutL"          	 	s 38 w &ADSP_X_IPC_BAU2ADV_pFStr &ADSP_X_Loudf_OutL_REL p
+"[7]FIn input from Front audio out of HiFi"             s 38 w &ADSP_X_FInPntr &ADSP_X_IPC_BAU2ADV_OutFL_REL p
+"[8]RIn input from Rear audio out of HiFi"             	s 38 w &ADSP_X_RInPntr &ADSP_X_IPC_BAU2ADV_OutRL_REL p  
+"[9]Subwoof input from Subwoof audio out of HiFi"       s 38 w &ADSP_X_CenterInPntr &ADSP_X_IPC_BAU2ADV_OutSwL_REL p
+"[10]Center input from Center audio out of HiFi"        s 38 w &ADSP_X_SubwInPntr &ADSP_X_IPC_BAU2ADV_OutSwR_REL p
+
+	
+>15 HiFi DTS Boot from Flash                           
+"[A] Hardware Reset"                                    m 2a		
+"[B] send SAF775E keycode"      s 38 w E1 00 1A E0 AB p   \\
+                                s 38 w E1 00 AF 21 32 p   \\
+                                s 38 w E1 00 84 A7 48 p   \\
+                                s 38 w E1 00 2F 10 0C p   \\
+                                s 38 w E1 00 66 25 2F p   \\
+                                s 38 w E1 00 85 D4 F7 p   \\
+                                s 38 w E1 00 7F 43 C8 p   \\
+                                s 38 w E1 00 0D 42 46 p 
+
+"[C] Boot from the flash (within 5 sec after reset) "				m 13a 11c 13c
+"[D] Tune 88.2MHz & 48K & Update defaults & Enable SRC+CODEC & 0dB unmute"		m 4a 5c 5ab 6a 7a 9af
+"[E] Tune 97.1MHz" s 38 w 00 10 25 EE p
+"[F] DA45 and Sub/Cen to DAC45"                   	s 38 w A9 34 00 p   \\	
+                                                        s 38 w F4 02 E5 00 01 6B p
+"[G] AIN0 input"                   	s 38 w a9 00 03 p  \\
+				        s 38 w a9 01 03 p  \\
+                                        S 38 W 20 08 P
+"Open CS AUTO"          	 	s 38 w &ADSP_X_IPC_BAU2ADV_pFStr &ADSP_X_Loudf_OutL_REL p\\
+								s 38 w &ADSP_X_FInPntr &ADSP_X_IPC_BAU2ADV_OutFL_REL p\\
+								s 38 w &ADSP_X_RInPntr &ADSP_X_IPC_BAU2ADV_OutRL_REL p\\  
+								s 38 w &ADSP_X_CenterInPntr &ADSP_X_IPC_BAU2ADV_OutSwL_REL p\\
+								s 38 w &ADSP_X_SubwInPntr &ADSP_X_IPC_BAU2ADV_OutSwR_REL p
+											
+"cmd_SRS_CSD_SetBaypass"       			s 38 w D0 16 00 p
+"cmd_SRS_CSD_SetBaypass"               s 38 w D0 16 01 p
+
+"SRS_CSD_SetInputGain  0x4000"                     s 38 w D0 00 40 00 p s 38 w f5 21 23 22 00 p s 39 r 4 p
+"SRS_CSD_SetInputGain  0x7fff"                     s 38 w D0 00 7f ff p	s 38 w f5 21 23 22 00 p s 39 r 4 p
+
+	"SRS_CSD_SetProcMode(csdObj, SRS_CSD_MUSIC)"	s 38 w D0 01 00 04 p s 38 w f5 21 23 22 00 p s 39 r 4 p
+	"SRS_CSD_SetOutMode(csdObj, SRS_CSD_MULTICHS)"	s 38 w D0 02 00 01 p s 38 w f5 21 23 22 00 p s 39 r 4 p
+	"SRS_CSD_SetPhantomEnable(csdObj, 0)"			s 38 w D0 03 00 00 p
+	"SRS_CSD_SetCenterFullBandEnable(csdObj, 0)"	s 38 w D0 04 00 00 p
+	"SRS_CSD_SetTBFrontEnable(csdObj, 0)"			s 38 w D0 05 00 00 p
+	"SRS_CSD_SetTBFrontEnable(csdObj, 1)"			s 38 w D0 05 00 01 p
+	"SRS_CSD_SetTBSubEnable(csdObj,1)"				s 38 w D0 06 00 01 p
+	"SRS_CSD_SetTBRearEnable(csdObj, 1)"		s 38 w D0 07 00 01 p
+	"SRS_CSD_SetFocusCenterEnable(csdObj,1)"	s 38 w D0 08 00 01 p
+	"SRS_CSD_SetFocusFrontEnable(csdObj, 1)"	s 38 w D0 09 00 01 p
+	"SRS_CSD_SetFocusRearEnable(csdObj,1)"		s 38 w D0 0A 00 01 p
+	"SRS_CSD_SetTBFrontLevel(csdObj,0x7fff)"	s 38 w D0 0B 7f ff p s 38 w f5 21 23 22 00 p s 39 r 4 p
+	"SRS_CSD_SetTBSubLevel(csdObj,0x7fff)"		s 38 w D0 0C 7f ff p s 38 w f5 21 23 22 00 p s 39 r 4 p
+	"SRS_CSD_SetTBRearLevel(csdObj,0x7fff)"		s 38 w D0 0D 7f ff p s 38 w f5 21 23 22 00 p s 39 r 4 p
+	"SRS_CSD_SetTBFrontSpksz(csdObj, SRS_TBHD_SPEAKER_LF_RESPONSE_60HZ)"    s 38 w D0 0E 00 01 p s 38 w f5 21 23 22 00 p s 39 r 4 p
+	"SRS_CSD_SetTBSubSpksz(csdObj,SRS_TBHD_SPEAKER_LF_RESPONSE_60HZ)"	s 38 w D0 0F 00 01 p s 38 w f5 21 23 22 00 p s 39 r 4 p
+	"SRS_CSD_SetTBRearSpksz(csdObj,SRS_TBHD_SPEAKER_LF_RESPONSE_60HZ)"	s 38 w D0 10 00 01 p s 38 w f5 21 23 22 00 p s 39 r 4 p
+	"SRS_CSD_SetFocusCenterLvl(csdObj,0x7fff)"	s 38 w D0 11 7f ff p s 38 w f5 21 23 22 00 p s 39 r 4 p
+	"SRS_CSD_SetFocusFrontLvl(csdObj, 0x7fff)"	s 38 w D0 12 7f ff p s 38 w f5 21 23 22 00 p s 39 r 4 p
+	"SRS_CSD_SetFocusRearLvl(csdObj,0x7fff)"	s 38 w D0 13 7f ff p s 38 w f5 21 23 22 00 p s 39 r 4 p
+	"SRS_CSD_SetFocusF2RLvl(csdObj,0x0000)"	        s 38 w D0 14 00 00 p s 38 w f5 21 23 22 00 p s 39 r 4 p
+	"SRS_CSD_SetFocusC2RLvl(csdObj,0x7fff)"	        s 38 w D0 15 7f ff p s 38 w f5 21 23 22 00 p s 39 r 4 p
+	"cmd_SRS_CSD_GetInputGain"						s 38 w D0 17 7f ff p s 38 w f5 21 23 22 00 p s 39 r 4 p
+    "cmd_SRS_CSD_GetProcMode"                   s 38 w D0 18 7f ff p s 38 w f5 21 23 22 00 p s 39 r 4 p
+    "cmd_SRS_CSD_GetOutMode"                    s 38 w D0 19 7f ff p s 38 w f5 21 23 22 00 p s 39 r 4 p
+    "cmd_SRS_CSD_GetPhantomEnable"              s 38 w D0 1A 7f ff p s 38 w f5 21 23 22 00 p s 39 r 4 p
+    "cmd_SRS_CSD_GetCenterFullBandEnable"       s 38 w D0 1B 7f ff p s 38 w f5 21 23 22 00 p s 39 r 4 p
+    "cmd_SRS_CSD_GetTBFrontEnable"              s 38 w D0 1C 7f ff p s 38 w f5 21 23 22 00 p s 39 r 4 p
+    "cmd_SRS_CSD_GetTBSubEnable"                s 38 w D0 1D 7f ff p s 38 w f5 21 23 22 00 p s 39 r 4 p
+    "cmd_SRS_CSD_GetTBRearEnable"               s 38 w D0 1E 7f ff p s 38 w f5 21 23 22 00 p s 39 r 4 p
+    "cmd_SRS_CSD_GetFocusCenterEnable"          s 38 w D0 1F 7f ff p s 38 w f5 21 23 22 00 p s 39 r 4 p
+    "cmd_SRS_CSD_GetFocusFrontEnable"           s 38 w D0 20 7f ff p s 38 w f5 21 23 22 00 p s 39 r 4 p
+    "cmd_SRS_CSD_GetFocusRearEnable"            s 38 w D0 21 7f ff p s 38 w f5 21 23 22 00 p s 39 r 4 p
+    "cmd_SRS_CSD_GetTBFrontSpksz"               s 38 w D0 22 7f ff p s 38 w f5 21 23 22 00 p s 39 r 4 p
+    "cmd_SRS_CSD_GetTBSubSpksz"                 s 38 w D0 23 7f ff p s 38 w f5 21 23 22 00 p s 39 r 4 p
+    "cmd_SRS_CSD_GetTBRearSpksz"                s 38 w D0 24 7f ff p s 38 w f5 21 23 22 00 p s 39 r 4 p
+    "cmd_SRS_CSD_GetFocusCenterLvl"             s 38 w D0 25 7f ff p s 38 w f5 21 23 22 00 p s 39 r 4 p
+    "cmd_SRS_CSD_GetFocusFrontLvl"              s 38 w D0 26 7f ff p s 38 w f5 21 23 22 00 p s 39 r 4 p
+    "cmd_SRS_CSD_GetFocusRearLvl"               s 38 w D0 27 7f ff p s 38 w f5 21 23 22 00 p s 39 r 4 p
+    "cmd_SRS_CSD_GetFocusF2RLvl"                s 38 w D0 28 7f ff p s 38 w f5 21 23 22 00 p s 39 r 4 p
+    "cmd_SRS_CSD_GetFocusC2RLvl"                s 38 w D0 29 7f ff p s 38 w f5 21 23 22 00 p s 39 r 4 p
+    "cmd_SRS_Get_Bypass"                        s 38 w D0 2A 7f ff p s 38 w f5 21 23 22 00 p s 39 r 4 p
+    "cmd_SRS_CSD_GetTBFrontLevel"               s 38 w D0 2B 7f ff p s 38 w f5 21 23 22 00 p s 39 r 4 p
+    "cmd_SRS_CSD_GetTBSubLevel"                 s 38 w D0 2C 7f ff p s 38 w f5 21 23 22 00 p s 39 r 4 p
+    "cmd_SRS_CSD_GetTBRearLevel"                s 38 w D0 2D 7f ff p s 38 w f5 21 23 22 00 p s 39 r 4 p
+    "test bootup ack" 							s 38 w f5 21 23 22 24 p s 39 r 4 p
+	"test register ack" 						s 38 w f5 21 23 22 20 p s 39 r 4 p
+	"test myresult	"							s 38 w f5 21 23 22 70 p s 39 r 4 p
+
+
+
+
+
